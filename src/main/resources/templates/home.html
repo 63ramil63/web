@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/mainStyle.css}">
+</head>
+<body>
+<div class="header">
+    ePrime
+</div>
+<div class="nav">
+    <div class="navMenu"></div>
+</div>
+<h1 >Добро пожаловать домой</h1>
+<a th:href="@{/login}">login</a>
+<form method="post" th:action="@{/logout}">
+    <input type="submit" value="Выйти">
+</form>
+</body>
+</html>

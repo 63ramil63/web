@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:fx="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}">
+</head>
+<body id="body">
+  <div id="bdiv">
+    <div id="mainContainer">
+      <div id="container">
+        <form id="inputForm"  th:action="@{/login}" th:object="${user}" method="post">
+          <div class="container1">
+            <input class="input" type="email" name="email" placeholder="Введите ваш email" required th:field="*{email}">
+          </div>
+          <div class="container1">
+            <input class="input" type="password" name="password" placeholder="Введите пароль" required th:field="*{password}">
+          </div>
+          <div class="inputContainer" >
+            <input class="inputButton" type="submit" value="Войти в аккаунт">
+          </div>
+        </form>
+      </div>
+      <div id="nav">
+          <div class="supdiv">
+            <a th:href="@{/}">На главную</a>
+          </div>
+          <div class="supdiv">
+            <a>Нет аккаунта?</a>
+            <a th:href="@{/registerform}">Создать</a>
+          </div>
+      </div>
+<!--      <div id="error" th:if="@{param.error}"  >-->
+<!--        Неверный email или пароль!-->
+<!--      </div>-->
+    </div>
+  </div>
+</body>
+</html>
