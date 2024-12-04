@@ -4,6 +4,65 @@
 }
 
 .header {
-    width: 100%;
+    background-color: gray;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
+    width: 100%;
+    font-size: 20px;
 }
+
+.navBody {
+    background-color: slategray;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#exit {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    padding: 10px;
+    cursor: pointer;
+
+}
+
+.nav {
+    display: flex;
+}
+
+.navBody div {
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.nav a {
+    text-decoration:none;
+}
+
+.nav2 {
+
+}
+
+#menu {
+    clear: both;
+    display: flex;
+}
+
+#product {
+    width:200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#product img{
+    width: 80%;
+    height: 80%;
+}
+

@@ -31,14 +31,14 @@ public class Config{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/", "/login", "/registerform", "/check").permitAll()
-                        .requestMatchers("/styles/**").permitAll()
+                        .requestMatchers("/register", "/", "/login", "/registerform").permitAll()
+                        .requestMatchers("/styles/**", "/images/**").permitAll()
                         .anyRequest().hasAuthority("USER"))
                 .formLogin(form -> form
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/home", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
