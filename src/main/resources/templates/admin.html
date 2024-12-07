@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <form method="post" th:object="${product}" th:action="@{/addProduct}">
+    <input type="text" th:field="*{product_name}" value="Наименование продукта">
+    <input type="text" th:field="*{image_url}" value="ссылка на изображение">
+    <input type="text" th:field="*{product_price}" value="цена">
+    <input type="text" th:field="*{description}" value="описание">
+    <input type="submit" value="подтвердить">
+  </form>
+</body>
+</html>

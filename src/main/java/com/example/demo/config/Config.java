@@ -8,8 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,7 +31,8 @@ public class Config{
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/register", "/", "/login", "/registerform").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
-                        .anyRequest().hasAuthority("USER"))
+                        .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
+                        .anyRequest().hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         .usernameParameter("email")
                         .passwordParameter("password")
