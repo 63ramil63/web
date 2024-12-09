@@ -3,14 +3,16 @@
 <head>
   <title>Getting Started: Serving Web Content</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" th:href="@{/styles/mainStyle.css}">
 </head>
 <body>
-  <form method="post" th:object="${product}" th:action="@{/addProduct}">
-    <input type="text" th:field="*{product_name}" value="Наименование продукта">
-    <input type="text" th:field="*{image_url}" value="ссылка на изображение">
-    <input type="text" th:field="*{product_price}" value="цена">
-    <input type="text" th:field="*{description}" value="описание">
-    <input type="submit" value="подтвердить">
+  <div class="header">Панель админа</div>
+  <form class="product_form" method="post" th:object="${product}" th:action="@{/addProduct}">
+    <input type="text" placeholder="Наименование продукта" th:field="*{product_name}" required>
+    <input type="text" placeholder="Ссылка на изображение" th:field="*{image_url}" required>
+    <input type="text" placeholder="Цена" th:field="*{product_price}" required>
+    <input type="text" placeholder="Описание" th:field="*{description}" required>
+    <input class="inputButton" type="submit" value="подтвердить">
   </form>
 </body>
 </html>

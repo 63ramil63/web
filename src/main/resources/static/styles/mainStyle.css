@@ -19,18 +19,19 @@
 }
 
 
-#exit {
+.exit {
     background: transparent;
     border: none;
     outline: none;
     color: inherit;
     padding: 10px;
     cursor: pointer;
-
 }
 
 .nav {
     display: flex;
+    background: blue;
+
 }
 
 .navBody div {
@@ -45,7 +46,8 @@
 }
 
 .nav2 {
-
+    background:black;
+    width: 30%;
 }
 
 #menu {
@@ -64,5 +66,22 @@
 #product img{
     width: 80%;
     height: 80%;
+}
+
+.product_form {
+    display: flex;
+    flex-direction: column;
+    width:30%;
+    padding:2px;
+}
+
+.product_form input {
+    margin: 1px;
+    height: 30px;
+}
+
+.inputButton {
+    cursor: pointer;
+    width: 40%;
 }
 
