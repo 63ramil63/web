@@ -17,7 +17,9 @@
 
 </div>
 <div class="nav2">
-    <a href="/admin"><div>Admin</div></a>
+    <div th:if="${isAdmin}">
+        <a href="/admin" ><div>ADMIN</div></a>
+    </div>
     <div>
     <form method="post" th:action="@{/logout}" >
         <input class="exit" type="submit" value="Выйти">

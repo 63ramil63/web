@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.config.Config;
 import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +24,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
+
+
     @GetMapping("/home")
     public String home(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities()
+                .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         return "home";
