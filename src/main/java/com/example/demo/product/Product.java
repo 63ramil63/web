@@ -15,6 +15,7 @@ public class Product {
     private String image_url;
     private int product_price;
     private String description;
+    private boolean isSale;
 
     public void setId(Long id){
         this.id = id;
@@ -54,5 +55,13 @@ public class Product {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public boolean getIsSale() {
+        return isSale;
+    }
+
+    public void setIsSale(boolean isSale) {
+        this.isSale = isSale;
     }
 }

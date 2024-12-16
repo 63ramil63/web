@@ -31,13 +31,13 @@ public class Config{
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/register", "/", "/login", "/registerform").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
-                        .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/market").hasAnyAuthority("USER", "ADMIN")
                         .anyRequest().hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/market", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

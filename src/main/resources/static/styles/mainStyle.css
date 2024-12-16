@@ -76,16 +76,25 @@ a {
 }
 
 #product {
+    margin: 5px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 20px;
     width:200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: .5s;
+    cursor: pointer;
+}
+
+#product:hover {
+    background-color: rgba(0,0,0,0.4);
+    transform: scale(1.01, 1.01 );
 }
 
 #product img{
-    width: 80%;
-    height: 80%;
+    width: 150px;
 }
 
 .product_form {

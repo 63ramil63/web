@@ -24,16 +24,32 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    private String username;
 
 
-
-    @GetMapping("/home")
+    @GetMapping("/market")
     public String home(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        username = authentication.getName();
+        model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
         List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
+        return "home";
+    }
+
+
+    @GetMapping("/sales")
+    public String sales(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities()
+                .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("isAdmin", isAdmin);
+        List<Product> products = productRepository.findByIsSaleTrue();
         model.addAttribute("products", products);
         return "home";
     }
@@ -47,6 +63,6 @@ public class ProductController {
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute Product product){
         productService.addProduct(product);
-        return "admin";
+        return "redirect:/admin";
     }
 }

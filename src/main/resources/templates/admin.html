@@ -8,10 +8,26 @@
 <body>
   <div class="header">Панель админа</div>
   <form class="product_form" method="post" th:object="${product}" th:action="@{/addProduct}">
-    <input type="text" placeholder="Наименование продукта" th:field="*{product_name}" required>
-    <input type="text" placeholder="Ссылка на изображение" th:field="*{image_url}" required>
-    <input type="text" placeholder="Цена" th:field="*{product_price}" required>
-    <input type="text" placeholder="Описание" th:field="*{description}" required>
+    <label>
+      <p>Наименование продукта</p>
+      <input type="text" placeholder="Наименование продукта" th:field="*{product_name}" required>
+    </label>
+    <label>
+      <p>Ссылка на изобр</p>
+      <input type="text" placeholder="Ссылка на изображение" th:field="*{image_url}" required>
+    </label>
+    <label>
+      <p>Цена</p>
+      <input type="text" placeholder="Цена" th:field="*{product_price}" required>
+    </label>
+    <label>
+      <p>Описание</p>
+      <input type="text" placeholder="Описание" th:field="*{description}" required>
+    </label>
+    <label>
+      <p>Акция?</p>
+      <input type="checkbox" th:field="*{isSale}">
+    </label>
     <input class="inputButton" type="submit" value="подтвердить">
   </form>
 </body>

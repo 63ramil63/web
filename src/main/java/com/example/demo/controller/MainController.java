@@ -55,7 +55,7 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)){
             System.out.println(true);
-            return "redirect:/home";
+            return "redirect:/market";
         }
         model.addAttribute("user", new User());
         return "login";

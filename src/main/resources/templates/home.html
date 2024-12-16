@@ -10,16 +10,17 @@
 <div class="header">ePrime</div>
 <div class="navBody">
 <div class="nav">
-    <a href=""><div>Товары</div></a>
-    <a href=""><div>Акции</div></a>
+    <a href="/market"><div>Товары</div></a>
+    <a href="/sales"><div>Акции</div></a>
     <a href=""><div>Поддержка</div></a>
     <a href=""><div>О нас</div></a>
 
 </div>
 <div class="nav2">
     <div th:if="${isAdmin}">
-        <a href="/admin" ><div>ADMIN</div></a>
+        <a href="/admin"><div>ADMIN</div></a>
     </div>
+    <a href="/purchases"><div th:text="${username}"></div></a>
     <div>
     <form method="post" th:action="@{/logout}" >
         <input class="exit" type="submit" value="Выйти">
@@ -32,7 +33,7 @@
     <div th:each="product: ${products}" class="product-item" id="product">
         <h2 th:text="${product.product_name}"></h2>
         <p th:text="${product.description}"></p>
-        <img th:src="${product.image_url}" alt="image of" th:alt="${product.product_name    }">
+        <img th:src="${product.image_url}" alt="image of" th:alt="${product.product_name}">
         <p th:text="${product.product_price}"></p>
     </div>
 </div>
