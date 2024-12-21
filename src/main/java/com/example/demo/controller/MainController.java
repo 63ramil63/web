@@ -23,15 +23,14 @@ public class MainController {
 
     @GetMapping("/")
     public String welcome(){
-        return "welcome";
+        return "redirect:/market";
     }
 
     @GetMapping("/registerform")
     public String Login(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)){
-            System.out.println(true);
-            return "redirect:/home";
+            return "redirect:/market";
         }
         model.addAttribute("user", new User());
         return "createAccount";

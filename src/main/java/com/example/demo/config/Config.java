@@ -29,9 +29,8 @@ public class Config{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/", "/login", "/registerform").permitAll()
+                        .requestMatchers("/register", "/", "/login", "/registerform", "/sales","/market").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
-                        .requestMatchers("/market").hasAnyAuthority("USER", "ADMIN")
                         .anyRequest().hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         .usernameParameter("email")

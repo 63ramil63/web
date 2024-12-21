@@ -5,6 +5,7 @@ import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,18 +27,34 @@ public class ProductController {
 
     private String username;
 
+    private String path;
+
+    private boolean isAuth;
+
 
     @GetMapping("/market")
-    public String home(Model model){
+    public String market(Model model){
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        username = authentication.getName();
+        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
+            isAuth = true;
+            username = authentication.getName();
+            path = "/purchases";
+        }else{
+            isAuth = false;
+            username = "Войти";
+            path = "/login";
+        }
+
+        model.addAttribute("isAuth", isAuth);
+        model.addAttribute("path", path);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
-        return "home";
+        return "market";
     }
 
 
@@ -46,12 +63,22 @@ public class ProductController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        username = authentication.getName();
+        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
+            isAuth = true;
+            username = authentication.getName();
+            path = "/purchases";
+        }else{
+            isAuth = false;
+            username = "Войти";
+            path = "/login";
+        }
+        model.addAttribute("isAuth", isAuth);
+        model.addAttribute("path", path);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
         List<Product> products = productRepository.findByIsSaleTrue();
         model.addAttribute("products", products);
-        return "home";
+        return "market";
     }
 
     @GetMapping("/admin")
