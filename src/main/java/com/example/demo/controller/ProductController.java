@@ -31,10 +31,10 @@ public class ProductController {
 
     private boolean isAuth;
 
+    private boolean fail_load;
 
     @GetMapping("/market")
     public String market(Model model){
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
@@ -48,12 +48,22 @@ public class ProductController {
             path = "/login";
         }
 
+        List<Product> products = productRepository.findAll();
+        if(!products.isEmpty()){
+            model.addAttribute("products", products);
+            fail_load = false;
+            model.addAttribute("fail_load", fail_load);
+        }else{
+            fail_load = true;
+            model.addAttribute("fail_load", fail_load);
+        }
+
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", path);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
-        List<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
+
+
         return "market";
     }
 
@@ -63,7 +73,7 @@ public class ProductController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
+        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){   //без аутентификации
             isAuth = true;
             username = authentication.getName();
             path = "/purchases";
@@ -72,11 +82,24 @@ public class ProductController {
             username = "Войти";
             path = "/login";
         }
+
+
+        List<Product> products = productRepository.findByIsSaleTrue();
+        if(!products.isEmpty()){
+            model.addAttribute("products", products);
+            fail_load = false;
+            model.addAttribute("fail_load", fail_load);
+            System.out.println(fail_load);
+        }else{
+            fail_load = true;
+            System.out.println(fail_load);
+            model.addAttribute("fail_load", fail_load);
+        }
+
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", path);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
-        List<Product> products = productRepository.findByIsSaleTrue();
         model.addAttribute("products", products);
         return "market";
     }
