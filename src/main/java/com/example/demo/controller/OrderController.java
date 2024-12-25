@@ -26,10 +26,8 @@ public class OrderController {
     public String order(@RequestParam Long productId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
-
         Product product = productRepository.findById(productId)
                 .orElseThrow(()-> new IllegalArgumentException("Неверный ID продукта: " + productId));
-
         Orders orders = new Orders();
         orders.setProduct(product);
         orders.setUserEmail(userEmail);
