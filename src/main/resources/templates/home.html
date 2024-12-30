@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="@{/styles/home.css}">
+    <title>Title</title>
+</head>
+<body>
+  <div class="mainContainer">
+    <div class="container" th:each="orders: ${order}">
+      <a th:text="${orders.userEmail}"></a><a th:text="${orders.product.product_name}"></a>
+    </div>
+  </div>
+</body>
+</html>

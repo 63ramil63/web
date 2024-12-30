@@ -41,7 +41,7 @@ public class ProductController {
         if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
             isAuth = true;
             username = authentication.getName();
-            path = "/purchases";
+            path = "/home";
         }else{
             isAuth = false;
             username = "Войти";
@@ -76,7 +76,7 @@ public class ProductController {
         if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){   //без аутентификации
             isAuth = true;
             username = authentication.getName();
-            path = "/purchases";
+            path = "/home";
         }else{
             isAuth = false;
             username = "Войти";
