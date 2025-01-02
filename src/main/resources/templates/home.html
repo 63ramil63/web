@@ -36,11 +36,10 @@
             <td><img th:src="${order.product.image_url}"></td>
             <td><h3 th:text="${order.product.product_name}"></h3></td>
             <td><h3 th:text="${order.product.product_price} + 'р.'"></h3></td>
-            <td>
+            <td id="sideCol">
                 <form method="post" th:action="@{/delete}">
                     <input type="hidden" name="id" th:value="${order.id}">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" value="Убрать">
+                    <input id="deleteButton" type="submit" value="✖">
                 </form>
             </td>
         </tr>

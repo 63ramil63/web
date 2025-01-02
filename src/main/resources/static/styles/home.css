@@ -106,9 +106,28 @@ td img{
     width: 100%;
 }
 
-
-
 th{
     background-color: rgba(0, 191, 255, 0.3);
     height: 50px;
 }
+
+#sideCol {
+    width: 40px;
+    background-color: rgba(255,255,255,0);
+}
+
+#deleteButton {
+    font-size: 40px;
+    background-color: rgba(255,255,255,0);
+    height:40px;
+    line-height: 40px;
+    border: none;
+    transition: .3s;
+    cursor: pointer;
+
+}
+
+#deleteButton:hover {
+    color: red;
+}
+
