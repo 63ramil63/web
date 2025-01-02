@@ -2,14 +2,49 @@
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="@{/styles/home.css}">
+    <link rel="stylesheet" th:href="@{/styles/home.css}">
     <title>Title</title>
 </head>
 <body>
-  <div class="mainContainer">
-    <div class="container" th:each="orders: ${order}">
-      <a th:text="${orders.userEmail}"></a><a th:text="${orders.product.product_name}"></a>
+<div class="header"><h2>Ваша корзина</h2></div>
+<div class="navBody">
+    <div class="nav">
+        <a href="/market"><div>Товары</div></a>
+        <a href="/sales"><div>Акции</div></a>
+        <a href=""><div>Поддержка</div></a>
+        <a href=""><div>О нас</div></a>
     </div>
-  </div>
+    <div class="nav2">
+        <div th:if="${isAdmin}">
+            <a href="/admin"><div>ADMIN</div></a>
+        </div>
+        <a th:href="${path}"><div th:text="${username}"></div></a>
+        <div th:if="${isAuth}">
+            <form method="post" th:action="@{/logout}" >
+                <input class="exit" type="submit" value="Выйти">
+            </form>
+        </div>
+    </div>
+</div>
+<div class="mainContainer">
+    <table th:if="${isOrder}">
+        <tr>
+            <th colspan="2"><h2>Товар</h2></th>
+            <th><h2>Цена</h2></th>
+        </tr>
+        <tr th:each="order: ${orders}">
+            <td><img th:src="${order.product.image_url}"></td>
+            <td><h3 th:text="${order.product.product_name}"></h3></td>
+            <td><h3 th:text="${order.product.product_price} + 'р.'"></h3></td>
+            <td>
+                <form method="post" th:action="@{/delete}">
+                    <input type="hidden" name="id" th:value="${order.id}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Убрать">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

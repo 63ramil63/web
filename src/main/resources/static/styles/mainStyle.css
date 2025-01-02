@@ -4,6 +4,7 @@
 }
 
 body {
+    margin: 0vw 10vw;
     background: linear-gradient(0.25turn, rgb(122, 196, 221),rgb(196, 209, 213),rgb(216, 156, 87));
 }
 
@@ -12,19 +13,21 @@ a {
 }
 
 .header {
-    background-color: rgba(120,120,120,0.5);
+    background-color: rgba(120,120,120,0.3);
     height: 50px;
     line-height: 50px;
     text-align: center;
     width: 100%;
-    font-size: 20px;
+
 }
 
 .navBody {
+    width: 100%;
     margin-top: 2px;
-    background-color: rgba(120,120,120,0.4);
+    background-color: rgba(120,120,120,0.2);
     display: flex;
     justify-content: space-between;
+    border-radius: 0px 0px 5px 5px;
 }
 
 .nav div, .nav2 div {
