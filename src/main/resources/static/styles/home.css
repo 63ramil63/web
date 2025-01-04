@@ -81,7 +81,7 @@ a {
 
 .mainContainer {
     width: 60%;
-    margin-left: 20%;
+    margin-left: 22%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,14 +100,16 @@ td  {
     padding: 10px;
     text-align: center;
     width: 200px;
+    height: 120px;
     background-color: rgba(135, 206, 250, 0.3);
 }
 td img{
-    width: 100%;
+    width: 120px;
+    height: 120px;
 }
 
 th{
-    background-color: rgba(0, 191, 255, 0.3);
+    background-color: rgba(0, 191, 255, 0.2);
     height: 50px;
 }
 
@@ -129,5 +131,16 @@ th{
 
 #deleteButton:hover {
     color: red;
+}
+
+.emptyOrders {
+    height: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tfooter {
+    height: 30px !important;
 }
 

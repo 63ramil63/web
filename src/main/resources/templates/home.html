@@ -43,7 +43,14 @@
                 </form>
             </td>
         </tr>
+        <tr>
+            <td colspan="2" class="tfooter"><h2>Итого:</h2></td>
+            <td class="tfooter"><h2 th:text="${cost} + 'р.'"></h2></td>
+        </tr>
     </table>
+    <div class="emptyOrders" th:if="${!isOrder}">
+        <h1>Корзина пуста</h1>
+    </div>
 </div>
 </body>
 </html>

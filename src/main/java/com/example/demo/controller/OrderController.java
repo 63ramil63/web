@@ -45,12 +45,19 @@ public class OrderController {
         }else{
             model.addAttribute("isOrder", false);
         }
+        int cost= 0;
+        for(Order order: orders){
+            cost = cost + order.getProduct().getProduct_price();
+
+        }
+        model.addAttribute("cost", cost);
         model.addAttribute("orders", orders);
         model.addAttribute("isAuth", true);
         model.addAttribute("username", userEmail);
         model.addAttribute("path", "/home");
         model.addAttribute("username", userEmail);
         return "home";
+
     }
 
     @PostMapping("/delete")

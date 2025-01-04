@@ -4,6 +4,7 @@
 }
 
 body {
+    min-width: 800px;
     margin: 0vw 10vw;
     background: linear-gradient(0.25turn, rgb(122, 196, 221),rgb(196, 209, 213),rgb(216, 156, 87));
 }
@@ -83,12 +84,12 @@ a {
 
 
 #product {
-    margin: 5px;
-    padding: 5px;
+    margin: 5px 0.5%;
+    width: 19%;
     background-color: rgba(0,0,0,0.2);
     border-radius: 20px;
-    min-width:200px;
-    min-height: 300px;
+    min-width: 200px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
