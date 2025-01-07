@@ -4,7 +4,9 @@ import com.example.demo.config.Config;
 import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.ProductService;
+import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
@@ -33,6 +35,19 @@ public class ProductController {
 
     private boolean fail_load;
 
+    @Cacheable(value = "allCache", key = "'prod'")
+    public List<Product> getProducts(){
+        System.out.println("Получение базы");
+        List<Product> product = productRepository.findAll();
+        System.out.println("Полученные продукты " + product);
+        return product;
+    }
+    @Cacheable(value = "saleCache", key = "'sale'")
+    public List<Product> getSaleProducts(){
+        System.out.println("Получение акции");
+        return productRepository.findByIsSaleTrue();
+    }
+
     @GetMapping("/market")
     public String market(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -47,8 +62,7 @@ public class ProductController {
             username = "Войти";
             path = "/login";
         }
-
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productService.getProducts();
         if(!products.isEmpty()){
             model.addAttribute("products", products);
             fail_load = false;
@@ -57,13 +71,10 @@ public class ProductController {
             fail_load = true;
             model.addAttribute("fail_load", fail_load);
         }
-
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", path);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
-
-
         return "market";
     }
 
@@ -82,9 +93,7 @@ public class ProductController {
             username = "Войти";
             path = "/login";
         }
-
-
-        List<Product> products = productRepository.findByIsSaleTrue();
+        List<Product> products = productService.getSaleProduct();
         if(!products.isEmpty()){
             model.addAttribute("products", products);
             fail_load = false;
@@ -92,7 +101,6 @@ public class ProductController {
             System.out.println(fail_load);
         }else{
             fail_load = true;
-            System.out.println(fail_load);
             model.addAttribute("fail_load", fail_load);
         }
 

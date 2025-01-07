@@ -5,6 +5,7 @@ import com.example.demo.product.Product;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class OrderController {
 
     @GetMapping("/home")
     public String home(Model model){
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
         List<Order> orders = orderRepository.findByUserEmail(userEmail);
@@ -57,7 +59,6 @@ public class OrderController {
         model.addAttribute("path", "/home");
         model.addAttribute("username", userEmail);
         return "home";
-
     }
 
     @PostMapping("/delete")
