@@ -11,10 +11,10 @@
       <div id="container">
         <form id="inputForm"  th:action="@{/login}" th:object="${user}" method="post">
           <div class="container1">
-            <input class="input" type="email" name="email" placeholder="Введите ваш email" required th:field="*{email}">
+            <input class="input" type="email"  placeholder="Введите ваш email" required th:field="*{email}">
           </div>
           <div class="container1">
-            <input class="input" type="password" name="password" placeholder="Введите пароль" required th:field="*{password}">
+            <input class="input" type="password"  placeholder="Введите пароль" required th:field="*{password}">
           </div>
           <div class="inputContainer" >
             <input class="inputButton" type="submit" value="Войти в аккаунт">

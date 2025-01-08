@@ -16,7 +16,7 @@ public class Product {
     private int product_price;
     private String description;
     private boolean isSale;
-
+    //Необходимые методы get/set для Spring
     public void setId(Long id){
         this.id = id;
     }

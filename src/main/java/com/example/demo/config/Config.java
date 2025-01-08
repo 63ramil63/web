@@ -19,36 +19,33 @@ public class Config{
     @Autowired
     private UserService userService;
 
-    @Bean
-    public PasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/", "/login", "/registerform", "/sales","/market").permitAll()
-                        .requestMatchers("/styles/**", "/images/**").permitAll()
-                        .anyRequest().hasAuthority("ADMIN"))
+                        .requestMatchers("/register", "/", "/login", "/registerform", "/sales","/market").permitAll()       //Страницы, доступные всем
+                        .requestMatchers("/styles/**", "/images/**").permitAll()    //Ресурсы доступные всем
+                        .requestMatchers("/home", "/order", "/delete").hasAnyAuthority("USER", "ADMIN")
+                        .anyRequest().hasAuthority("ADMIN"))    //Абсолютно все страницы и ресурсы доступны пользователям с ролью ADMIN
                 .formLogin(form -> form
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/market", true)
-                        .permitAll())
-                .logout(logout -> logout
+                        .usernameParameter("email")             //Указываем название ввода данных с атрибутом th:field="email"
+                        .passwordParameter("password")          //Указываем название ввода данных с атрибутом th:field="password"
+                        .loginPage("/login")                    //Страница для логина
+                        .defaultSuccessUrl("/market", true)     //Страница при входе
+                        .permitAll())                           //Доступ разрешен всем
+                .logout(logout -> logout                        //Настройка страницы выхода
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                         .permitAll());
         return http.build();
     }
 
+
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder  authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(encoder());
-        return authenticationManagerBuilder.build();
+    public PasswordEncoder encoder(){       //Шифрование паролей
+        return new BCryptPasswordEncoder();
     }
 }

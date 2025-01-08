@@ -23,11 +23,11 @@ public class OrderController {
     OrderRepository orderRepository;
 
     @PostMapping("/order")
-    public String order(@RequestParam Long productId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        Product product = productRepository.findById(productId)
-                .orElseThrow(()-> new IllegalArgumentException("Неверный ID продукта: " + productId));
+    public String order(@RequestParam Long productId){  //RequestParam берет productID из нажатой кнопки
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();     //Получение пользователя
+        String userEmail = authentication.getName();        //Получение email пользователя
+        Product product = productRepository.findById(productId)     //Получение продукта по ID
+                .orElseThrow(()-> new IllegalArgumentException("Неверный ID продукта: " + productId));  //Выкидывание ошибки при неверном ID
         Order orders = new Order();
         orders.setProduct(product);
         orders.setUserEmail(userEmail);
@@ -38,19 +38,17 @@ public class OrderController {
 
     @GetMapping("/home")
     public String home(Model model){
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        List<Order> orders = orderRepository.findByUserEmail(userEmail);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();     //Получение пользователя
+        String userEmail = authentication.getName();    //Получение email пользователя
+        List<Order> orders = orderRepository.findByUserEmail(userEmail);    //Коллекция заказов выбранных по email
         if(!orders.isEmpty()){
             model.addAttribute("isOrder", true);
         }else{
             model.addAttribute("isOrder", false);
         }
-        int cost= 0;
-        for(Order order: orders){
+        int cost = 0;
+        for(Order order: orders){   //Подсчет итоговой суммы
             cost = cost + order.getProduct().getProduct_price();
-
         }
         model.addAttribute("cost", cost);
         model.addAttribute("orders", orders);
@@ -63,8 +61,7 @@ public class OrderController {
 
     @PostMapping("/delete")
     public String delete (@RequestParam Long id){
-        orderRepository.deleteById(id);
+        orderRepository.deleteById(id);     //Удаление заказа по ID заказа
         return "redirect:/home";
     }
-
 }

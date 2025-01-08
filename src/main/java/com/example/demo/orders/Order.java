@@ -15,7 +15,7 @@ public class Order {
     private Product product;
 
     private String userEmail;
-
+    //Необходимые методы get/set для Spring
     public void setId(Long id){
         this.id = id;
     }

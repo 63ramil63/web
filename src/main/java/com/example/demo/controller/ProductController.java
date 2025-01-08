@@ -35,34 +35,21 @@ public class ProductController {
 
     private boolean fail_load;
 
-    @Cacheable(value = "allCache", key = "'prod'")
-    public List<Product> getProducts(){
-        System.out.println("Получение базы");
-        List<Product> product = productRepository.findAll();
-        System.out.println("Полученные продукты " + product);
-        return product;
-    }
-    @Cacheable(value = "saleCache", key = "'sale'")
-    public List<Product> getSaleProducts(){
-        System.out.println("Получение акции");
-        return productRepository.findByIsSaleTrue();
-    }
-
     @GetMapping("/market")
     public String market(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAdmin = authentication.getAuthorities()
-                .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();     //Получение пользователя
+        boolean isAdmin = authentication.getAuthorities()   //возвращение коллекции ролей пользователя
+                .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));    //проверяет на наличие роли ADMIN из потока
+        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){    //проверка на авторизованного пользователя
             isAuth = true;
-            username = authentication.getName();
-            path = "/home";
+            username = authentication.getName();    //Надпись на кнопке
+            path = "/home";     //путь, куда будет вести кнопка
         }else{
             isAuth = false;
-            username = "Войти";
-            path = "/login";
+            username = "Войти"; //Надпись на кнопке
+            path = "/login";    //путь, куда будет вести кнопка
         }
-        List<Product> products = productService.getProducts();
+        List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
         if(!products.isEmpty()){
             model.addAttribute("products", products);
             fail_load = false;
@@ -81,17 +68,17 @@ public class ProductController {
 
     @GetMapping("/sales")
     public String sales(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();     //Получение пользователя
         boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){   //без аутентификации
+        if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){   //проверка на аутентифицированного пользователя
             isAuth = true;
-            username = authentication.getName();
-            path = "/home";
+            username = authentication.getName();    //Надпись на кнопке
+            path = "/home";     //путь, куда будет вести кнопка
         }else{
             isAuth = false;
-            username = "Войти";
-            path = "/login";
+            username = "Войти";     //Надпись на кнопке
+            path = "/login";    //путь, куда будет вести кнопка
         }
         List<Product> products = productService.getSaleProduct();
         if(!products.isEmpty()){

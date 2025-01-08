@@ -4,8 +4,6 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.roles.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +13,12 @@ import com.example.demo.User;
 
 @Service
 public class UserService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
-    @Lazy
+    @Lazy //фикс бага
     private PasswordEncoder encoder;
 
     public boolean registerUser(User user){
@@ -31,7 +31,6 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -40,10 +39,5 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
         return user;
-    }
-
-    public boolean isUserAuthenticated(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null && authentication.isAuthenticated();
     }
 }

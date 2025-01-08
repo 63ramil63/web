@@ -27,25 +27,25 @@ public class MainController {
     }
 
     @GetMapping("/registerform")
-    public String Login(Model model){
+    public String register(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)){
-            return "redirect:/market";
+            return "redirect:/market";              //Если пользователь авторизован, то переводит на глав страницу
         }
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new User());         //добавление объекта User к Форме
         return "createAccount";
     }
 
     @PostMapping("/register")
-    public String submit(@ModelAttribute User user, Model model){
-        if(user.getPassword().equals(user.getConfirmPassword())){
+    public String submit(@ModelAttribute User user, Model model){   //ModelAttribute указывает то, что из формы мы получаем объект User
+        if(user.getPassword().equals(user.getConfirmPassword())){   //Проверка совпадения двух полей паролей при регистрации
             if(!userService.registerUser(user)){
                 model.addAttribute("error", "Пользователь с таким email уже существует");
                 return "createAccount";
             }
             return "redirect:/login";
         }
-        model.addAttribute("error", "Пароли не совпадают");
+        model.addAttribute("error", "Пароли не совпадают");     //Добавление надписи ошибки
         return "createAccount";
     }
 
@@ -53,14 +53,9 @@ public class MainController {
     public String login(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)){
-            System.out.println(true);
-            return "redirect:/market";
+            return "redirect:/market";      //Если пользователь авторизован, то перенаправляет на глав страницу
         }
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new User());     //добавление объекта User к Форме
         return "login";
     }
-
-
-
-
 }
