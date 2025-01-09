@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import com.example.demo.roles.Role;
 import jakarta.persistence.*;
@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)    //Указываем, что поле role является перечислением Enum
     private Role role;
 
-    //Необходимые методы Get/set для Spring +
+    //Необходимые методы Get/set для Spring
     public void setEmail(String email){
         this.email = email;
     }
@@ -67,6 +67,4 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
-
-
 }

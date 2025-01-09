@@ -1,5 +1,5 @@
 package com.example.demo.controller;
-import com.example.demo.User;
+import com.example.demo.user.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
