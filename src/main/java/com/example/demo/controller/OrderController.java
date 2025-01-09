@@ -5,6 +5,7 @@ import com.example.demo.orders.Order;
 import com.example.demo.product.Product;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.services.OrderService;
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,9 @@ public class OrderController implements IMain {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderService orderService;
 
     private String userEmail;
 
@@ -70,7 +74,7 @@ public class OrderController implements IMain {
     @GetMapping("/home")
     public String home(Model model){
         getAuth();  //Получение email пользователя
-        List<Order> orders = orderRepository.findByUserEmail(userEmail);    //Коллекция заказов выбранных по email
+        List<Order> orders = orderService.getOrder(userEmail);    //Коллекция заказов выбранных по email
         getProd(model, Arrays.asList(orders.toArray()));
 
         model.addAttribute("isAuth", true);
