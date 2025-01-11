@@ -15,7 +15,7 @@ public class CacheConfig {
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();
         cacheManager.setCaffeine(Caffeine.newBuilder()
-                .expireAfterWrite(10, TimeUnit.SECONDS)             //Время старения кэша
+                .expireAfterWrite(60, TimeUnit.SECONDS)             //Время старения кэша
                 .maximumSize(100));                                         //Макс кол-во сохраняемых объектов в кэш
         return cacheManager;
     }

@@ -8,8 +8,11 @@ import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.OrderService;
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,17 +35,14 @@ public class OrderController implements IMain {
     private boolean isAdmin;
 
     @PostMapping("/order")
-    public String order(@RequestParam Long productId){  //RequestParam берет productID из нажатой кнопки
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();     //Получение пользователя
-        String userEmail = authentication.getName();        //Получение email пользователя
-        Product product = productRepository.findById(productId)     //Получение продукта по ID
-                .orElseThrow(()-> new IllegalArgumentException("Неверный ID продукта: " + productId));  //Выкидывание ошибки при неверном ID
-        Order orders = new Order();
-        orders.setProduct(product);
-        orders.setUserEmail(userEmail);
-        orderRepository.save(orders);
+    public String order1(@RequestParam Long productId){
+        getAuth();
+        orderService.order(productId, userEmail);   //Сохранение заказа
         return "redirect:/market";
     }
+
+
+
 
     @Override
     public void getAuth(){
@@ -75,7 +75,7 @@ public class OrderController implements IMain {
     public String home(Model model){
         getAuth();  //Получение email пользователя
         List<Order> orders = orderService.getOrder(userEmail);    //Коллекция заказов выбранных по email
-        getProd(model, Arrays.asList(orders.toArray()));
+        getProd(model, Arrays.asList(orders.toArray()));          //Превращение Order->Object
 
         model.addAttribute("isAuth", true);
         model.addAttribute("username", userEmail);
@@ -85,8 +85,9 @@ public class OrderController implements IMain {
     }
 
     @PostMapping("/delete")
-    public String delete (@RequestParam Long id){
-        orderRepository.deleteById(id);     //Удаление заказа по ID заказа
+    public String delete1(@RequestParam Long id){
+        getAuth();
+        orderService.delete(id, userEmail);
         return "redirect:/home";
     }
 }
