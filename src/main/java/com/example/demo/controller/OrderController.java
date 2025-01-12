@@ -81,6 +81,7 @@ public class OrderController implements IMain {
         model.addAttribute("username", userEmail);
         model.addAttribute("path", "/home");
         model.addAttribute("username", userEmail);
+        model.addAttribute("isAdmin", isAdmin);
         return "home";
     }
 
