@@ -6,6 +6,7 @@ import com.example.demo.product.Product;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -35,10 +36,11 @@ public class OrderController implements IMain {
     private boolean isAdmin;
 
     @PostMapping("/order")
-    public String order1(@RequestParam Long productId){
+    public String order1(@RequestParam Long productId, HttpServletRequest request){
         getAuth();
-        orderService.order(productId, userEmail);   //Сохранение заказа
-        return "redirect:/market";
+        orderService.order(productId, userEmail);              //Сохранение заказа
+        String referer = request.getHeader("Referer");      //Получение ссылки на начальную страницу
+        return "redirect:" + referer;
     }
 
 

@@ -6,7 +6,27 @@
   <link rel="stylesheet" type="text/css" th:href="@{/styles/mainStyle.css}">
 </head>
 <body>
-  <div class="header">Панель админа</div>
+<div class="header"><h2>ePrime</h2></div>
+<div class="navBody">
+  <div class="nav">
+    <a href="/market"><div>Товары</div></a>
+    <a href="/sales"><div>Акции</div></a>
+    <a href="https://t.me/wrotoftanks63"><div>Поддержка</div></a>
+    <a href="https://t.me/wrotoftanks63"><div>О нас</div></a>
+  </div>
+  <div class="nav2">
+    <div th:if="${isAdmin}">
+      <a href="/admin"><div>ADMIN</div></a>
+    </div>
+    <a th:href="${path}"><div th:text="${username}"></div></a>
+    <div th:if="${isAuth}">
+      <form method="post" th:action="@{/logout}" >
+        <input class="exit" type="submit" value="Выйти">
+      </form>
+    </div>
+  </div>
+</div>
+  <div id="menu">
   <form class="product_form" method="post" th:object="${product}" th:action="@{/addProduct}">
     <label>
       <p>Наименование продукта</p>
@@ -30,5 +50,6 @@
     </label>
     <input class="inputButton" type="submit" value="подтвердить">
   </form>
+  </div>
 </body>
 </html>

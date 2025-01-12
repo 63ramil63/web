@@ -93,7 +93,12 @@ public class ProductController implements IMain {
 
     @GetMapping("/admin")
     public String admin(Model model){
+        getAuth();
         model.addAttribute("product", new Product());
+        model.addAttribute("username", username);
+        model.addAttribute("path", path);
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("isAuth", isAuth);
         return "admin";
     }
 
@@ -102,6 +107,4 @@ public class ProductController implements IMain {
         productService.addProduct(product);
         return "redirect:/admin";
     }
-
-
 }
