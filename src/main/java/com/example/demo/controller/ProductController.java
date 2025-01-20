@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.interfaces.IMain;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -64,11 +66,13 @@ public class ProductController implements IMain {
     }
 
     @GetMapping("/market")
-    public String market(Model model){
+    public String market(Model model, @RequestParam(required = false) String sort){
         getAuth();
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
         getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
-
+        if("price".equals(sort)){
+            products.sort(Comparator.comparing(Product::getProduct_price));
+        }
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", path);
         model.addAttribute("username", username);

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByIsSaleTrue();       //Поиск продуктов по булевой переменной isSale со значением True
+
 }

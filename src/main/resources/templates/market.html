@@ -27,6 +27,12 @@
     </div>
 </div>
 </div>
+<div>
+    <form method="get" th:action="@{/market}">
+        <input type="hidden" name="sort" value="price">
+        <input type="submit" value="Отсортировать по цене">
+    </form>
+</div>
 <div id="menu">
     <div th:each="product: ${products}" class="product-item" id="product" >
         <h2 th:text="${product.product_name}"></h2>

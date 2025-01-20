@@ -2,18 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.interfaces.IMain;
 import com.example.demo.orders.Order;
-import com.example.demo.product.Product;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.services.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
