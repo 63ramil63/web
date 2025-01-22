@@ -65,13 +65,31 @@ public class ProductController implements IMain {
         }
     }
 
-    public void sortProd(List<Product> products, String sort){
+    public void sortProd(Model model, List<Product> products, String sort){
         switch (sort) {
-            case "price":
+            case "increase":
                 products.sort(Comparator.comparing(Product::getProduct_price));
+                model.addAttribute("isSorted", true);
+                model.addAttribute("firstOption", "increase");
+                model.addAttribute("firstOptionText", "по возрастанию");
+                model.addAttribute("secondOption", "decrease");
+                model.addAttribute("secondOptionText", "по убыванию");
                 break;
-            case "undo":
+            case "decrease":
                 products.sort(Comparator.comparing(Product::getProduct_price).reversed());
+                model.addAttribute("isSorted", true);
+                model.addAttribute("firstOption", "decrease");
+                model.addAttribute("firstOptionText", "по убыванию");
+                model.addAttribute("secondOption", "increase");
+                model.addAttribute("secondOptionText", "по возрастанию");
+                break;
+            case null, default:
+                model.addAttribute("isSorted", false);
+                model.addAttribute("firstOption", "increase");
+                model.addAttribute("firstOptionText", "по возрастанию");
+                model.addAttribute("secondOption", "decrease");
+                model.addAttribute("secondOptionText", "по убыванию");
+                break;
         }
     }
 
@@ -82,9 +100,8 @@ public class ProductController implements IMain {
         String pagePath = "/market";
         getAuth();
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
-        if(sort != null) {
-            sortProd(products, sort);
-        }
+        sortProd(model, products, sort);
+
         getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", button_path);
@@ -100,9 +117,9 @@ public class ProductController implements IMain {
         String pagePath = "/sales";
         getAuth();
         List<Product> products = productService.getSaleProduct();   //Получение в виде коллекции всех продуктов
-        if(sort != null){
-            sortProd(products, sort);
-        }
+
+        sortProd(model, products, sort);
+
         getProd(model, Arrays.asList(products.toArray()));          //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
 
         model.addAttribute("isAuth", isAuth);

@@ -29,11 +29,10 @@
 </div>
 <div>
     <form method="get" th:action="@{${pagePath}}">
-        <label for="sort">Сортировать</label>
-        <select id="sort" name="sort" onchange="this.form.submit()">
-            <option value=""></option>
-            <option value="price">по возрастанию</option>
-            <option value="undo">по убыванию</option>
+        <select name="sort" onchange="this.form.submit()">
+            <option th:if="${!isSorted}" value="">Сортировать</option>
+            <option th:value="${firstOption}"><a th:text="${firstOptionText}"></a></option>
+            <option th:value="${secondOption}"><a th:text="${secondOptionText}"></a></option>
         </select>
     </form>
 </div>
