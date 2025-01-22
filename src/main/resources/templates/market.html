@@ -28,9 +28,13 @@
 </div>
 </div>
 <div>
-    <form method="get" th:action="@{/market}">
-        <input type="hidden" name="sort" value="price">
-        <input type="submit" value="Отсортировать по цене">
+    <form method="get" th:action="@{${pagePath}}">
+        <label for="sort">Сортировать</label>
+        <select id="sort" name="sort" onchange="this.form.submit()">
+            <option value=""></option>
+            <option value="price">по возрастанию</option>
+            <option value="undo">по убыванию</option>
+        </select>
     </form>
 </div>
 <div id="menu">

@@ -29,7 +29,7 @@ public class ProductController implements IMain {
 
     private String username;
 
-    private String path;
+    private String button_path;
 
     private boolean isAuth;
 
@@ -45,11 +45,11 @@ public class ProductController implements IMain {
         if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
             isAuth = true;
             username = authentication.getName();
-            path = "/home";
+            button_path = "/home";
         }else{
             isAuth = false;
             username = "Войти";
-            path = "/login";
+            button_path = "/login";
         }
     }
 
@@ -65,16 +65,30 @@ public class ProductController implements IMain {
         }
     }
 
+    public void sortProd(List<Product> products, String sort){
+        switch (sort) {
+            case "price":
+                products.sort(Comparator.comparing(Product::getProduct_price));
+                break;
+            case "undo":
+                products.sort(Comparator.comparing(Product::getProduct_price).reversed());
+        }
+    }
+
+
+
     @GetMapping("/market")
-    public String market(Model model, @RequestParam(required = false) String sort){
+    public String market(Model model, @RequestParam(required = false) String sort){     //sort - знач передаваемой кнопкой
+        String pagePath = "/market";
         getAuth();
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
-        getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
-        if("price".equals(sort)){
-            products.sort(Comparator.comparing(Product::getProduct_price));
+        if(sort != null) {
+            sortProd(products, sort);
         }
+        getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
         model.addAttribute("isAuth", isAuth);
-        model.addAttribute("path", path);
+        model.addAttribute("path", button_path);
+        model.addAttribute("pagePath", pagePath);
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
         return "market";
@@ -82,13 +96,19 @@ public class ProductController implements IMain {
 
 
     @GetMapping("/sales")
-    public String sales(Model model){
+    public String sales(Model model, @RequestParam(required = false) String sort){
+        String pagePath = "/sales";
         getAuth();
         List<Product> products = productService.getSaleProduct();   //Получение в виде коллекции всех продуктов
+        if(sort != null){
+            sortProd(products, sort);
+        }
         getProd(model, Arrays.asList(products.toArray()));          //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
 
         model.addAttribute("isAuth", isAuth);
-        model.addAttribute("path", path);
+        model.addAttribute("path", button_path);
+        model.addAttribute("pagePath", pagePath);
+
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("products", products);
@@ -100,7 +120,7 @@ public class ProductController implements IMain {
         getAuth();
         model.addAttribute("product", new Product());
         model.addAttribute("username", username);
-        model.addAttribute("path", path);
+        model.addAttribute("path", button_path);
         model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("isAuth", isAuth);
         return "admin";
