@@ -62,5 +62,23 @@
     </div>
 </div>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const products = document.querySelectorAll('#product');
+        products.forEach(product => {
+            const width = product.offsetWidth;
+            product.style.height = (width * 1.5) + 'px'; // Установите нужный коэффициент
+        });
+
+        // Обновляйте высоту при изменении размера окна
+        window.addEventListener('resize', () => {
+            products.forEach(product => {
+                const width = product.offsetWidth;
+                product.style.height = (width * 1.5) + 'px';
+            });
+        });
+    });
+
+</script>
 </body>
 </html>
