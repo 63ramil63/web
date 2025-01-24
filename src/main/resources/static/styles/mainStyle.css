@@ -5,7 +5,6 @@
 
 body {
     min-width: 800px;
-    margin: 0vw 10vw;
     background: linear-gradient(0.25turn, rgb(169, 206, 218),rgb(196, 209, 213),rgb(169, 206, 218));
 }
 
@@ -24,8 +23,7 @@ a {
 
 .navBody {
     width: 100%;
-    margin-top: 2px;
-    background-color: rgba(120,120,120,0.6);
+    background-color: rgba(128,128,128,0.8);
     display: flex;
     justify-content: space-between;
     border-radius: 0px 0px 5px 5px;
@@ -69,9 +67,34 @@ a {
     text-decoration:none;
 }
 
-#menu {
+#container {
+    margin: 0px 2px;
     clear: both;
     display: flex;
+    overflow: auto;
+}
+
+#sortContainer {
+    margin-top: 5px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+#sideMenu {
+    width: 250px;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+#productContainer {
+    display:flex;
     flex-wrap: wrap;
     overflow: auto;
 }
@@ -87,7 +110,7 @@ a {
     margin: 5px 0.5%;
     width: 15.6%;
     background-color: rgba(0,0,0,0.2);
-    border-radius: 20px;
+    border-radius: 5px;
     min-width: 180px;
     height: 300px;
     display: flex;

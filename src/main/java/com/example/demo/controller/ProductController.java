@@ -66,7 +66,7 @@ public class ProductController implements IMain {
     }
 
     public void sortProd(Model model, List<Product> products, String sort){
-        switch (sort) {
+        switch (sort) {                                                     //сортировка предметов по requestparam
             case "increase":
                 products.sort(Comparator.comparing(Product::getProduct_price));
                 model.addAttribute("isSorted", true);
