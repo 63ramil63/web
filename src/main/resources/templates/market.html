@@ -32,10 +32,12 @@
 <div id="menu">
     <div id="sortContainer">
         <form method="get" th:action="@{${pagePath}}" id="sortMenu">
-            <select name="sort" onchange="this.form.submit()">
-                <option th:if="${!isSorted}" value="">Сортировать</option>
-                <option th:value="${firstOption}"><a th:text="${firstOptionText}"></a></option>
-                <option th:value="${secondOption}"><a th:text="${secondOptionText}"></a></option>
+            <label for="select">Сортировать</label>
+            <select id="select" name="sort" onchange="this.form.submit()" onfocus="this.form.option[1].display:none">
+                <option disabled selected><a th:text="${currentOption}"></a></option>
+                <option value=""><a>по умолчанию</a></option>
+                <option value="increase"><a>по возрастанию</a></option>
+                <option value="decrease"><a>по убыванию</a></option>
             </select>
         </form>
     </div>
@@ -67,17 +69,27 @@
         const products = document.querySelectorAll('#product');
         products.forEach(product => {
             const width = product.offsetWidth;
-            product.style.height = (width * 1.5) + 'px'; // Установите нужный коэффициент
+            product.style.height = (width * 1.4) + 'px'; // Установите нужный коэффициент
         });
 
         // Обновляйте высоту при изменении размера окна
         window.addEventListener('resize', () => {
             products.forEach(product => {
                 const width = product.offsetWidth;
-                product.style.height = (width * 1.5) + 'px';
+                product.style.height = (width * 1.4) + 'px';
             });
         });
     });
+    const selectElement = document.getElementById('select');
+        const firstOption = selectElement.options[0]; // Получаем первую опцию
+
+        selectElement.addEventListener('focus', function() {
+            firstOption.style.display = 'none'; // Скрыть первую опцию при открытии
+        });
+
+        selectElement.addEventListener('blur', function() {
+            firstOption.style.display = 'block'; // Показать первую опцию при закрытии
+        });
 
 </script>
 </body>

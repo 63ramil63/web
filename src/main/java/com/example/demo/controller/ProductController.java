@@ -69,26 +69,15 @@ public class ProductController implements IMain {
         switch (sort) {                                                     //сортировка предметов по requestparam
             case "increase":
                 products.sort(Comparator.comparing(Product::getProduct_price));
-                model.addAttribute("isSorted", true);
-                model.addAttribute("firstOption", "increase");
-                model.addAttribute("firstOptionText", "по возрастанию");
-                model.addAttribute("secondOption", "decrease");
-                model.addAttribute("secondOptionText", "по убыванию");
+                model.addAttribute("currentOption", "по возрастанию");
                 break;
             case "decrease":
                 products.sort(Comparator.comparing(Product::getProduct_price).reversed());
-                model.addAttribute("isSorted", true);
-                model.addAttribute("firstOption", "decrease");
-                model.addAttribute("firstOptionText", "по убыванию");
-                model.addAttribute("secondOption", "increase");
-                model.addAttribute("secondOptionText", "по возрастанию");
+                model.addAttribute("currentOption", "по убыванию");
                 break;
             case null, default:
-                model.addAttribute("isSorted", false);
-                model.addAttribute("firstOption", "increase");
-                model.addAttribute("firstOptionText", "по возрастанию");
-                model.addAttribute("secondOption", "decrease");
-                model.addAttribute("secondOptionText", "по убыванию");
+                products.sort(Comparator.comparing(Product::getId));
+                model.addAttribute("currentOption", "по умолчанию");
                 break;
         }
     }
