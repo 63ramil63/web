@@ -86,6 +86,17 @@ a {
     width: 0px;
 }
 
+#select {
+    padding: 0px;
+    background: none;
+    border: none;
+}
+
+#select:hover {
+    cursor: pointer;
+}
+
+
 #sideMenu {
     width: 250px;
 }
@@ -119,6 +130,7 @@ a {
     background-color: rgba(0,0,0,0.2);
     border-radius: 5px;
     min-width: 180px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

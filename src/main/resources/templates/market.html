@@ -32,7 +32,7 @@
 <div id="menu">
     <div id="sortContainer">
         <form method="get" th:action="@{${pagePath}}" id="sortMenu">
-            <label for="select">Сортировать</label>
+            <label for="select">Сортировка:</label>
             <select id="select" name="sort" onchange="this.form.submit()" onfocus="this.form.option[1].display:none">
                 <option disabled selected><a th:text="${currentOption}"></a></option>
                 <option value=""><a>по умолчанию</a></option>
