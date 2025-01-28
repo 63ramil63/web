@@ -28,12 +28,18 @@
 </div>
 </div>
 <div id="container">
-    <div id="sideMenu"></div>
+    <div id="sideMenu">
+        <form method="get" th:action="@{${pagePath}}">
+            <input type="hidden" name="sort" th:value="${currentSort}">
+            <input type="submit" name="category" value="nout">
+        </form>
+    </div>
 <div id="menu">
     <div id="sortContainer">
         <form method="get" th:action="@{${pagePath}}" id="sortMenu">
+            <input type="hidden" name="category" th:value="${currentCategory}">
             <label for="select">Сортировка:</label>
-            <select id="select" name="sort" onchange="this.form.submit()" onfocus="this.form.option[1].display:none">
+            <select id="select" name="sort"  value="${currentSort}" onchange="this.form.submit()" onfocus="this.form.option[1].display:none">
                 <option disabled selected><a th:text="${currentOption}"></a></option>
                 <option value=""><a>по умолчанию</a></option>
                 <option value="increase"><a>по возрастанию</a></option>
