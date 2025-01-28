@@ -87,43 +87,15 @@ public class ProductController implements IMain {
     }
 
 
-    public static class MarketRequest{
-        private String sort;
-        private String category;
-
-        public void setSort(String sort){
-            this.sort = sort;
-            System.out.println("set sort: " + sort);
-        }
-
-        public String getSort(){
-            System.out.println("get sort: " + sort);
-            return this.sort;
-
-        }
-
-        public void setCategory(String category){
-            this.category = category;
-            System.out.println("set category: " + category);
-        }
-
-        public String getCategory(){
-            System.out.println("getCategory: " + category);
-            return this.category;
-        }
-    }
-
     @GetMapping("/market")
-    public String market(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String category){     //sort - знач передаваемой кнопкой
+    public String market(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String filter){     //sort - знач передаваемой кнопкой
         String pagePath = "/market";
-//        String sort = request.getSort();
-//        String category = request.getCategory();
         System.out.println(sort);
-        System.out.println(category);
+        System.out.println(filter);
         getAuth();
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
         sortProd(model, products, sort);
-        if (category != null && category.equals("nout")) {
+        if (filter != null && filter.equals("nout")) {
             System.out.println(true);
             List<Product> newProducts = new ArrayList<>();
             products.forEach(product -> {
@@ -134,11 +106,11 @@ public class ProductController implements IMain {
 
             getProd(model, Arrays.asList(newProducts.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
             model.addAttribute("products", newProducts);
-            model.addAttribute("currentCategory", category);
+            model.addAttribute("currentCategory", filter);
         }else {
             getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
             model.addAttribute("products", products);
-            model.addAttribute("currentCategory", category);
+            model.addAttribute("currentCategory", filter);
         }
 
         model.addAttribute("isAuth", isAuth);
