@@ -27,14 +27,9 @@ public class OrderController implements IMain {
     @Autowired
     OrderService orderService;
 
-    private String userEmail;
-
-    private boolean isAdmin;
-
     @PostMapping("/order")
-    public String order1(@RequestParam Long productId, HttpServletRequest request){
-        getAuth();
-        orderService.order(productId, userEmail);              //Сохранение заказа
+    public String order1(@RequestParam Long productId, HttpServletRequest request, @RequestParam String email){
+        orderService.order(productId, email);                  //Сохранение заказа
         String referer = request.getHeader("Referer");      //Получение ссылки на начальную страницу
         return "redirect:" + referer;
     }
@@ -43,11 +38,13 @@ public class OrderController implements IMain {
 
 
     @Override
-    public void getAuth(){
+    public void getAuth(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userEmail = authentication.getName();
-        isAdmin = authentication.getAuthorities()
+        String email = authentication.getName();
+        boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        model.addAttribute("username", email);
+        model.addAttribute("isAdmin", isAdmin);
     }
 
     @Override
@@ -71,22 +68,22 @@ public class OrderController implements IMain {
 
     @GetMapping("/home")
     public String home(Model model){
-        getAuth();  //Получение email пользователя
-        List<Order> orders = orderService.getOrder(userEmail);    //Коллекция заказов выбранных по email
-        getProd(model, Arrays.asList(orders.toArray()));          //Превращение Order->Object
+        getAuth(model);                                           //Получение email пользователя
+        String email = (String) model.getAttribute("username");
+        List<Order> orders = orderService.getOrder(email);    //Коллекция заказов выбранных по email
+        getProd(model, Arrays.asList(orders.toArray()));          //Превращение Order -> Object
 
         model.addAttribute("isAuth", true);
-        model.addAttribute("username", userEmail);
+
         model.addAttribute("path", "/home");
-        model.addAttribute("username", userEmail);
-        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("username", email);
+
         return "home";
     }
 
     @PostMapping("/delete")
-    public String delete1(@RequestParam Long id){
-        getAuth();
-        orderService.delete(id, userEmail);
+    public String delete1(@RequestParam Long id, @RequestParam String email){
+        orderService.delete(id, email);
         return "redirect:/home";
     }
 }

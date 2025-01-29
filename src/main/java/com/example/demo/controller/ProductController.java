@@ -28,34 +28,34 @@ public class ProductController implements IMain {
     @Autowired
     private ProductService productService;
 
-    private String username;
-
-    private String button_path;
-
-    private boolean isAuth;
-
-    private boolean fail_load;
-
-    private boolean isAdmin;
 
     @Override
-    public void getAuth() {
+    public void getAuth(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        isAdmin = authentication.getAuthorities()
+        boolean isAdmin = authentication.getAuthorities()
                 .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        boolean isAuth;
+        String userEmail;
+        String button_path;
         if(!(authentication instanceof AnonymousAuthenticationToken) && authentication != null){
             isAuth = true;
-            username = authentication.getName();
+            userEmail = authentication.getName();
             button_path = "/home";
         }else{
             isAuth = false;
-            username = "Войти";
+            userEmail = "Войти";
             button_path = "/login";
         }
+        model.addAttribute("username", userEmail);
+        model.addAttribute("isAuth", isAuth);
+        model.addAttribute("path", button_path);
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("path", button_path);
     }
 
     @Override
     public void getProd(Model model, List<Object> products){
+        boolean fail_load;
         if(!products.isEmpty()){
             model.addAttribute("products", products);
             fail_load = false;
@@ -86,36 +86,34 @@ public class ProductController implements IMain {
         }
     }
 
+    public void filterProd(Model model, List<Product> products, String filter){
+        List<Product> newProducts = new ArrayList<>();
+        products.forEach(product -> {
+            if(product.getCategory().equals(filter)){
+                newProducts.add(product);
+            }
+        });
+        getProd(model, Arrays.asList(newProducts.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
+        model.addAttribute("products", newProducts);
+        model.addAttribute("currentFilter", filter);
+    }
+
 
     @GetMapping("/market")
     public String market(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String filter){     //sort - знач передаваемой кнопкой
         String pagePath = "/market";
-        getAuth();
+        getAuth(model);
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
         sortProd(model, products, sort);
-        if (filter != null && filter.equals("nout")) {
-            System.out.println(true);
-            List<Product> newProducts = new ArrayList<>();
-            products.forEach(product -> {
-                if(product.getProduct_name().contains("Ф")){
-                    newProducts.add(product);
-                }
-            });
-
-            getProd(model, Arrays.asList(newProducts.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
-            model.addAttribute("products", newProducts);
-            model.addAttribute("currentFilter", filter);
+        if (filter != null && !filter.isEmpty()) {
+            filterProd(model, products, filter);
         }else {
             getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
             model.addAttribute("products", products);
             model.addAttribute("currentFilter", filter);
         }
         model.addAttribute("categories", productService.getCategories());
-        model.addAttribute("isAuth", isAuth);
-        model.addAttribute("path", button_path);
         model.addAttribute("pagePath", pagePath);
-        model.addAttribute("username", username);
-        model.addAttribute("isAdmin", isAdmin);
         return "market";
     }
 
@@ -123,7 +121,7 @@ public class ProductController implements IMain {
     @GetMapping("/sales")
     public String sales(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String filter){
         String pagePath = "/sales";
-        getAuth();
+        getAuth(model);
         List<Product> products = productService.getSaleProduct();   //Получение в виде коллекции всех продуктов
 
         sortProd(model, products, sort);
@@ -145,22 +143,14 @@ public class ProductController implements IMain {
             model.addAttribute("products", products);
             model.addAttribute("currentFilter", filter);
         }
-        model.addAttribute("isAuth", isAuth);
-        model.addAttribute("path", button_path);
         model.addAttribute("pagePath", pagePath);
-        model.addAttribute("username", username);
-        model.addAttribute("isAdmin", isAdmin);
         return "market";
     }
 
     @GetMapping("/admin")
     public String admin(Model model){
-        getAuth();
+        getAuth(model);
         model.addAttribute("product", new Product());
-        model.addAttribute("username", username);
-        model.addAttribute("path", button_path);
-        model.addAttribute("isAdmin", isAdmin);
-        model.addAttribute("isAuth", isAuth);
         return "admin";
     }
 

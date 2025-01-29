@@ -39,6 +39,7 @@
             <td id="sideCol">
                 <form method="post" th:action="@{/delete}">
                     <input type="hidden" name="id" th:value="${order.id}">
+                    <input type="hidden" name="email" th:value="${username}">
                     <input id="deleteButton" type="submit" value="✖">
                 </form>
             </td>
