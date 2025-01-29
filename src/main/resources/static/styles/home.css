@@ -5,8 +5,7 @@
 
 
 body {
-    min-width: 700px;
-    margin: 0vw 10vw;
+    min-width: 800px;
     background: linear-gradient(0.25turn, rgb(169, 206, 218),rgb(196, 209, 213),rgb(169, 206, 218));
 }
 
@@ -22,13 +21,12 @@ a {
     line-height: 50px;
     text-align: center;
     width: 100%;
-    font-size: 20px;
 }
 
 
 .navBody {
-    margin-top: 2px;
-    background-color: rgba(120,120,120,0.6);
+    width: 100%;
+    background-color: rgba(128,128,128,0.8);
     display: flex;
     justify-content: space-between;
     border-radius: 0px 0px 5px 5px;
@@ -37,7 +35,7 @@ a {
 
 .nav div, .nav2 div {
     margin: 2px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 

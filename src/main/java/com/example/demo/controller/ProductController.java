@@ -110,7 +110,7 @@ public class ProductController implements IMain {
             model.addAttribute("products", products);
             model.addAttribute("currentFilter", filter);
         }
-
+        model.addAttribute("categories", productService.getCategories());
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", button_path);
         model.addAttribute("pagePath", pagePath);
@@ -121,22 +121,35 @@ public class ProductController implements IMain {
 
 
     @GetMapping("/sales")
-    public String sales(Model model, @RequestParam(required = false) String sort){
+    public String sales(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String filter){
         String pagePath = "/sales";
         getAuth();
         List<Product> products = productService.getSaleProduct();   //Получение в виде коллекции всех продуктов
 
         sortProd(model, products, sort);
 
-        getProd(model, Arrays.asList(products.toArray()));          //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
+        if (filter != null && filter.equals("nout")) {
+            System.out.println(true);
+            List<Product> newProducts = new ArrayList<>();
+            products.forEach(product -> {
+                if(product.getProduct_name().contains("Ф")){
+                    newProducts.add(product);
+                }
+            });
 
+            getProd(model, Arrays.asList(newProducts.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
+            model.addAttribute("products", newProducts);
+            model.addAttribute("currentFilter", filter);
+        }else {
+            getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
+            model.addAttribute("products", products);
+            model.addAttribute("currentFilter", filter);
+        }
         model.addAttribute("isAuth", isAuth);
         model.addAttribute("path", button_path);
         model.addAttribute("pagePath", pagePath);
-
         model.addAttribute("username", username);
         model.addAttribute("isAdmin", isAdmin);
-        model.addAttribute("products", products);
         return "market";
     }
 

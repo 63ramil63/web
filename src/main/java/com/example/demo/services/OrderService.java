@@ -32,8 +32,6 @@ public class OrderService {
 
     @CachePut(value = "orderCache", key = "#email")                                                     //ключ email позволяет обновлять кэш только для выбранного пользователя
     public List<Order> order(Long productId, String email){                                             //RequestParam берет productID из нажатой кнопки
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();         //Получение пользователя
-        email = authentication.getName();                                                               //Получение email пользователя
         Product product = productRepository.findById(productId)                                         //Получение продукта по ID
                 .orElseThrow(()-> new IllegalArgumentException("Неверный ID продукта: " + productId));  //Выкидывание ошибки при неверном ID
         Order orders = new Order();

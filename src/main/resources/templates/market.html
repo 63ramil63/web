@@ -21,9 +21,9 @@
     </div>
     <a th:href="${path}"><div th:text="${username}"></div></a>
     <div th:if="${isAuth}">
-    <form method="post" th:action="@{/logout}" >
-        <input class="exit" type="submit" value="Выйти">
-    </form>
+        <form method="post" th:action="@{/logout}" >
+            <input class="exit" type="submit" value="Выйти">
+        </form>
     </div>
 </div>
 </div>
@@ -31,7 +31,7 @@
     <div id="sideMenu">
         <form method="get" th:action="@{${pagePath}}">
             <input type="hidden" name="sort" th:value="${currentSort}">
-            <input type="submit" name="filter" value="nout">
+            <input th:each="category: ${categories}" type="submit" name="filter" th:value="*{category}">
         </form>
     </div>
 <div id="menu">

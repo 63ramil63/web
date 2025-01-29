@@ -22,8 +22,13 @@ public class ProductService {
     public List<Product> getProducts(){
         System.out.println("Получение базы");
         List<Product> products = productRepository.findAll();
-        System.out.println("Полученные проудкты " + products);
+        System.out.println("Полученные продукты " + products);
         return products;
+    }
+
+    @Cacheable(value = "categories", key = "'Categories'")
+    public List<String> getCategories(){
+        return productRepository.findCategories();
     }
 
 
@@ -31,7 +36,7 @@ public class ProductService {
     public List<Product> getSaleProduct(){
         System.out.println("Получение акций");
         List<Product> products = productRepository.findByIsSaleTrue();
-        System.out.println("Полученные проудкты " + products);
+        System.out.println("Полученные продукты " + products);
         return products;
     }
 }
