@@ -90,8 +90,6 @@ public class ProductController implements IMain {
     @GetMapping("/market")
     public String market(Model model, @RequestParam(required = false) String sort, @RequestParam(required = false) String filter){     //sort - знач передаваемой кнопкой
         String pagePath = "/market";
-        System.out.println(sort);
-        System.out.println(filter);
         getAuth();
         List<Product> products = productService.getProducts();  //Получение в виде коллекции всех продуктов
         sortProd(model, products, sort);
@@ -106,11 +104,11 @@ public class ProductController implements IMain {
 
             getProd(model, Arrays.asList(newProducts.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
             model.addAttribute("products", newProducts);
-            model.addAttribute("currentCategory", filter);
+            model.addAttribute("currentFilter", filter);
         }else {
             getProd(model, Arrays.asList(products.toArray()));      //products.toArray - Product в массив объектов Object, Arrays.asList - массив Объектов в список Объектов
             model.addAttribute("products", products);
-            model.addAttribute("currentCategory", filter);
+            model.addAttribute("currentFilter", filter);
         }
 
         model.addAttribute("isAuth", isAuth);

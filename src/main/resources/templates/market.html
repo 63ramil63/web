@@ -37,7 +37,7 @@
 <div id="menu">
     <div id="sortContainer">
         <form method="get" th:action="@{${pagePath}}" id="sortMenu">
-            <input type="hidden" name="category" th:value="${currentFilter}">
+            <input type="hidden" name="filter" th:value="${currentFilter}">
             <label for="select">Сортировка:</label>
             <select id="select" name="sort"  value="${currentSort}" onchange="this.form.submit()" onfocus="this.form.option[1].display:none">
                 <option disabled selected><a th:text="${currentOption}"></a></option>
