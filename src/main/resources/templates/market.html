@@ -30,7 +30,8 @@
 <div id="container">
     <div id="sideMenu">
         <div id="filterMenu">
-            <form method="get" th:action="@{${pagePath}}">
+            <h2>Фильтры</h2>
+            <form id="filterForm" method="get" th:action="@{${pagePath}}">
                 <input type="hidden" name="sort" th:value="${currentSort}">
                 <input th:each="category: ${categories}" type="submit" name="filter" th:value="*{category}">
             </form>
