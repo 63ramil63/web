@@ -51,7 +51,7 @@
         </form>
     </div>
     <div id="productContainer">
-    <div th:each="product: ${products}" class="product-item" id="product" >
+    <div th:each="product: ${products}" class="product-item" id="product"   >
         <h2 th:text="${product.product_name}"></h2>
         <div id="imagediv">
             <img th:src="${product.image_url}" alt="image of" th:alt="${product.product_name}">
@@ -61,12 +61,12 @@
         </div>
         <div id="pricediv">
             <h3 th:text="${product.product_price} + ' руб.'"></h3>
-        </div>
         <form method="post" th:action="@{/order}">
             <input type="hidden" th:name="email" th:value="${username}">
             <input type="hidden" th:name="productId" th:value="${product.id}">
-            <input class="buy" type="submit" value="Заказать">
+            <input class="buy" type="image" th:src="@{/images/buyButton.png}" alt="Submit">
         </form>
+        </div>
     </div>
     <div id="productErrorDiv" th:if="${fail_load}">
         <h2>Ошибка загрузки на стороне сервера</h2>
