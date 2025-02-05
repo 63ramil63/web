@@ -33,6 +33,7 @@
             <tr>
                 <th colspan="2" id="firstTh"><h2>Товар</h2></th>
                 <th id="secondTh"><h2>Цена</h2></th>
+                <th></th>
             </tr>
             <tr th:each="order: ${orders}">
                 <td><img th:src="${order.product.image_url}"></td>
@@ -46,14 +47,23 @@
                     </form>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2" class="tfooter"><h2>Итого:</h2></td>
-                <td class="tfooter"><h2 th:text="${cost} + 'р.'"></h2></td>
-            </tr>
         </table>
     </div>
     <div class="emptyOrders" th:if="${!isOrder}">
         <h1>Корзина пуста</h1>
+    </div>
+    <div id="purchase">
+        <div id="pHead"><h2>Условия заказа</h2></div>
+        <div>
+            <a>Итого:</a>
+        </div>
+        <div class="final">
+            <h2 th:text="${count}"></h2>
+            <h2 th:text="${cost} + '₽'"></h2>
+        </div>
+        <div id="pButtonDiv">
+            <button id="purchaseButton">Оплатить</button>
+        </div>
     </div>
 </div>
 </body>

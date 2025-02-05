@@ -65,6 +65,21 @@ public class OrderController implements IMain {
         }
     }
 
+    public String getRightWord(String count){
+        char c = count.charAt(count.length()-1);
+        int _count = Integer.parseInt(count);
+        if (_count > 10 && _count < 20){
+            return "товаров";
+        }else {
+            return switch (c) {
+                case '1' -> _count + " товар";
+                case '2', '3', '4' -> _count + " товара";
+                case '5', '6', '7', '8', '9', '0' -> _count + " товаров";
+                default -> "ошибка";
+            };
+        }
+    }
+
 
     @GetMapping("/home")
     public String home(Model model){
@@ -72,7 +87,8 @@ public class OrderController implements IMain {
         String email = (String) model.getAttribute("username");
         List<Order> orders = orderService.getOrder(email);    //Коллекция заказов выбранных по email
         getProd(model, Arrays.asList(orders.toArray()));          //Превращение Order -> Object
-
+        String count = getRightWord(String.valueOf(orders.size()));
+        model.addAttribute("count", count);
         model.addAttribute("isAuth", true);
 
         model.addAttribute("path", "/home");
