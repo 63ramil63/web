@@ -78,16 +78,30 @@ a {
 
 
 .mainContainer {
-    width: 60%;
-    margin-left: 22%;
+    margin-left: 2%;
+    width: 96%;
+    display: flex;
+    justify-content: left;
+}
+
+.container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+.head {
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+}
+
+.head h2 {
+    font-size: 35px;
 }
 
 
+
 table {
-    margin-top: 5px;
     border-collapse: separate;
     border-spacing: 0px 10px;
 }
@@ -97,23 +111,33 @@ td  {
     margin: 5px 0px;
     padding: 10px;
     text-align: center;
-    width: 200px;
-    height: 120px;
-    background-color: rgba(135, 206, 250, 0.3);
+    width: 250px;
+    height: 180px;
+    background-color: rgba(169, 206, 218, 0.5);
 }
 td img{
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
+}
+
+td h3 {
+    font-size: 20px;
 }
 
 th{
-    background-color: rgba(0, 191, 255, 0.2);
+    background-color: rgba(169, 206, 218, 0.6);
     height: 50px;
+}
+
+#firstTh {
+    border-radius: 5px 0px 0px 0px;
+}
+#secondTh {
+    border-radius: 0px 5px 0px 0px;
 }
 
 #sideCol {
     width: 40px;
-    background-color: rgba(255,255,255,0);
 }
 
 #deleteButton {
@@ -124,11 +148,11 @@ th{
     border: none;
     transition: .3s;
     cursor: pointer;
-
+    border-radius: 5px;
 }
 
 #deleteButton:hover {
-    color: red;
+    background-color: rgba(0,0,0,0.2);
 }
 
 .emptyOrders {
@@ -136,6 +160,7 @@ th{
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .tfooter {

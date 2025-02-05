@@ -51,7 +51,7 @@
         </form>
     </div>
     <div id="productContainer">
-    <div th:each="product: ${products}" class="product-item" id="product"   >
+    <div th:each="product: ${products}" class="product-item" id="product">
         <h2 th:text="${product.product_name}"></h2>
         <div id="imagediv">
             <img th:src="${product.image_url}" alt="image of" th:alt="${product.product_name}">

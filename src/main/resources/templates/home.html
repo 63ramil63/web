@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<div class="header"><h2>Ваша корзина</h2></div>
+<div class="header"><h2>ePrime</h2></div>
 <div class="navBody">
     <div class="nav">
         <a href="/market"><div>Товары</div></a>
@@ -27,28 +27,31 @@
     </div>
 </div>
 <div class="mainContainer">
-    <table th:if="${isOrder}">
-        <tr>
-            <th colspan="2"><h2>Товар</h2></th>
-            <th><h2>Цена</h2></th>
-        </tr>
-        <tr th:each="order: ${orders}">
-            <td><img th:src="${order.product.image_url}"></td>
-            <td><h3 th:text="${order.product.product_name}"></h3></td>
-            <td><h3 th:text="${order.product.product_price} + 'р.'"></h3></td>
-            <td id="sideCol">
-                <form method="post" th:action="@{/delete}">
-                    <input type="hidden" name="id" th:value="${order.id}">
-                    <input type="hidden" name="email" th:value="${username}">
-                    <input id="deleteButton" type="submit" value="✖">
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="tfooter"><h2>Итого:</h2></td>
-            <td class="tfooter"><h2 th:text="${cost} + 'р.'"></h2></td>
-        </tr>
-    </table>
+    <div class="container" th:if="${isOrder}">
+        <div class="head"><h2>Корзина</h2></div>
+        <table>
+            <tr>
+                <th colspan="2" id="firstTh"><h2>Товар</h2></th>
+                <th id="secondTh"><h2>Цена</h2></th>
+            </tr>
+            <tr th:each="order: ${orders}">
+                <td><img th:src="${order.product.image_url}"></td>
+                <td><h3 th:text="${order.product.product_name}"></h3></td>
+                <td><h3 th:text="${order.product.product_price} + 'р.'"></h3></td>
+                <td id="sideCol">
+                    <form method="post" th:action="@{/delete}">
+                        <input type="hidden" name="id" th:value="${order.id}">
+                        <input type="hidden" name="email" th:value="${username}">
+                        <input id="deleteButton" type="image" th:src="@{/images/delete.png}">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="tfooter"><h2>Итого:</h2></td>
+                <td class="tfooter"><h2 th:text="${cost} + 'р.'"></h2></td>
+            </tr>
+        </table>
+    </div>
     <div class="emptyOrders" th:if="${!isOrder}">
         <h1>Корзина пуста</h1>
     </div>
