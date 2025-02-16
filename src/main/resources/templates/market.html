@@ -27,18 +27,24 @@
     </div>
 </div>
 </div>
-<div id="container">
+<div id="container" th:if="${!fail_load}">
     <div id="sideMenu">
         <div id="filterMenu">
-            <h2>Фильтры</h2>
-            <form id="filterForm" method="get" th:action="@{${pagePath}}">
+            <form class="filterForm" method="get" th:action="@{${pagePath}}">
+                <div><h2>Фильтры</h2>
+                    <button type="submit" id="reloadButton">↺</button>
+                    <input type="hidden" name="filter" value="">
+                </div>
+                <input type="hidden" name="sort" th:value="${currentSort}">
+            </form>
+            <form class="filterForm" method="get" th:action="@{${pagePath}}">
                 <input type="hidden" name="sort" th:value="${currentSort}">
                 <input th:each="category: ${categories}" type="submit" name="filter" th:value="*{category}">
             </form>
         </div>
     </div>
 <div id="menu">
-    <div id="sortContainer">
+    <div id="sortContainer" th:if="${!fail_load}">
         <form method="get" th:action="@{${pagePath}}" id="sortMenu">
             <input type="hidden" name="filter" th:value="${currentFilter}">
             <label for="select">Сортировка:</label>
@@ -75,21 +81,6 @@
 </div>
 </div>
 <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const products = document.querySelectorAll('#product');
-        products.forEach(product => {
-            const width = product.offsetWidth;
-            product.style.height = (width * 1.4) + 'px'; // Установите нужный коэффициент
-        });
-
-        // Обновляйте высоту при изменении размера окна
-        window.addEventListener('resize', () => {
-            products.forEach(product => {
-                const width = product.offsetWidth;
-                product.style.height = (width * 1.4) + 'px';
-            });
-        });
-    });
     const selectElement = document.getElementById('select');
         const firstOption = selectElement.options[0]; // Получаем первую опцию
 

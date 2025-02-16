@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.controller.ProductController;
 import com.example.demo.product.Product;
 import com.example.demo.repository.ProductRepository;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class ProductService {
     public List<String> getCategories(){
         return productRepository.findCategories();
     }
+
+    @Cacheable(value = "saleCategories", key = "'Categories'")
+    public List<String> getSaleCategories() { return productRepository.findSaleCategories(); }
 
 
     @Cacheable(value = "saleProd", key = "'sale'")

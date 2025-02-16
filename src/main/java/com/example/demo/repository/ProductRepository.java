@@ -12,4 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByIsSaleTrue();       //Поиск продуктов по булевой переменной isSale со значением True
     @Query("SELECT DISTINCT p.category FROM Product p")
     List<String> findCategories();
+    @Query("SELECT DISTINCT p.category FROM Product p WHERE p.isSale = true")
+    List<String> findSaleCategories();
 }

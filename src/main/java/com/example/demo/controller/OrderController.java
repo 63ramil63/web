@@ -37,33 +37,9 @@ public class OrderController implements IMain {
 
 
 
-    @Override
-    public void getAuth(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        boolean isAdmin = authentication.getAuthorities()
-                .stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        model.addAttribute("username", email);
-        model.addAttribute("isAdmin", isAdmin);
-    }
 
-    @Override
-    public void getProd(Model model, List<Object> orders){
-        if(!orders.isEmpty()){
-            model.addAttribute("isOrder", true);
-            model.addAttribute("orders", orders);
-            int cost = 0;
-            for(Object order: orders){
-                if(order instanceof Order){                                 //Проверка что order является классом Order
-                    Order _order = (Order) order;                           //Превращение из Object в Order
-                    cost = cost + _order.getProduct().getProduct_price();
-                }
-                model.addAttribute("cost", cost);
-            }
-        }else{
-            model.addAttribute("isOrder", false);
-        }
-    }
+
+
 
     public String getRightWord(String count){
         char c = count.charAt(count.length()-1);
@@ -83,17 +59,13 @@ public class OrderController implements IMain {
 
     @GetMapping("/home")
     public String home(Model model){
-        getAuth(model);                                           //Получение email пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        getAuth(model, authentication);                                           //Получение email пользователя
         String email = (String) model.getAttribute("username");
         List<Order> orders = orderService.getOrder(email);    //Коллекция заказов выбранных по email
-        getProd(model, Arrays.asList(orders.toArray()));          //Превращение Order -> Object
+        getOrder(model, Arrays.asList(orders.toArray()));          //Превращение Order -> Object
         String count = getRightWord(String.valueOf(orders.size()));
         model.addAttribute("count", count);
-        model.addAttribute("isAuth", true);
-
-        model.addAttribute("path", "/home");
-        model.addAttribute("username", email);
-
         return "home";
     }
 

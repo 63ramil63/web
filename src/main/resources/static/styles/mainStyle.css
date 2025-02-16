@@ -71,7 +71,6 @@ a {
     margin: 0px 2px;
     clear: both;
     display: flex;
-    overflow: auto;
 }
 
 #sortContainer {
@@ -114,8 +113,26 @@ a {
     border-radius: 5px;
 }
 
-#filterForm {
+.filterForm {
     width: 100%;
+}
+
+.filterForm div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#reloadButton {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+#reloadButton:hover{
+    cursor: pointer;
 }
 
 #filterMenu input {
@@ -128,7 +145,6 @@ a {
 
 #filterMenu input:hover {
     background: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
 }
 
 #menu {
@@ -137,13 +153,12 @@ a {
     flex-direction: column;
     align-items: left;
     flex-wrap: wrap;
-    overflow: auto;
 }
 
 #productContainer {
     display:flex;
     flex-wrap: wrap;
-    overflow: auto;
+
 }
 
 #productErrorDiv {
@@ -157,6 +172,7 @@ a {
     margin: 5px 0.5%;
     padding: 5px 0px;
     width: 31%;
+    height: 356w;
     background-color: rgba(169, 206, 218, 0.4);
     border-radius: 5px;
     min-width: 180px;
@@ -182,12 +198,13 @@ a {
 }
 
 img {
+
     width: 100%;
-    height: 100%;
 }
 
 #imagediv {
     width: 80%;
+    height: 80%;
 }
 
 #pricediv {
@@ -244,7 +261,4 @@ img {
     border: 1px solid gray;
 }
 
-.buy:hover {
-
-}
 

@@ -52,7 +52,7 @@
     <div class="emptyOrders" th:if="${!isOrder}">
         <h1>Корзина пуста</h1>
     </div>
-    <div id="purchase">
+    <div id="purchase" th:if="${isOrder}">
         <div id="pHead"><h2>Условия заказа</h2></div>
         <div>
             <a>Итого:</a>
