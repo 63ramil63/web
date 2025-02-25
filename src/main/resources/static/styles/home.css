@@ -83,6 +83,7 @@ a {
     display: flex;
     justify-content: left;
     gap: 100px;
+    margin-bottom: 30px;
 }
 
 .container {
@@ -215,5 +216,12 @@ th{
 
 .tfooter {
     height: 30px !important;
+}
+.footer {
+    position: fixed;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    background: rgba(169, 206, 218, 1);
 }
 

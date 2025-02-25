@@ -71,6 +71,7 @@ a {
     margin: 0px 2px;
     clear: both;
     display: flex;
+    margin-bottom: 30px;
 }
 
 #sortContainer {
@@ -259,6 +260,14 @@ img {
     border-radius: 12px;
     padding: 8px;
     border: 1px solid gray;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    background: rgba(169, 206, 218, 1);
 }
 
 
