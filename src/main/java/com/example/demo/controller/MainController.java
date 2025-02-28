@@ -30,7 +30,7 @@ public class MainController {
     public String register(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)){
-            return "redirect:/market";              //Если пользователь авторизован, то переводит на глав страницу
+            return "redirect:/market";                              //Если пользователь авторизован, то переводит на глав страницу
         }
         model.addAttribute("user", new User());         //добавление объекта User к Форме
         return "createAccount";

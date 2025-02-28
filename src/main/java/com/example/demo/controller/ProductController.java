@@ -28,11 +28,6 @@ public class ProductController implements IMain {
     @Autowired
     private ProductService productService;
 
-
-
-
-
-
     public void sortProd(Model model, List<Product> products, String sort){
         switch (sort) {                                                     //сортировка предметов по requestparam
             case "increase":

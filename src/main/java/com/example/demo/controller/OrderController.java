@@ -19,27 +19,14 @@ import java.util.List;
 @Controller
 public class OrderController implements IMain {
     @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    OrderRepository orderRepository;
-
-    @Autowired
     OrderService orderService;
 
     @PostMapping("/order")
-    public String order1(@RequestParam Long productId, HttpServletRequest request, @RequestParam String email){
+    public String order(@RequestParam Long productId, HttpServletRequest request, @RequestParam String email){
         orderService.order(productId, email);                  //Сохранение заказа
         String referer = request.getHeader("Referer");      //Получение ссылки на начальную страницу
         return "redirect:" + referer;
     }
-
-
-
-
-
-
-
 
     public String getRightWord(String count){
         char c = count.charAt(count.length()-1);
@@ -70,7 +57,7 @@ public class OrderController implements IMain {
     }
 
     @PostMapping("/delete")
-    public String delete1(@RequestParam Long id, @RequestParam String email){
+    public String delete(@RequestParam Long id, @RequestParam String email){
         orderService.delete(id, email);
         return "redirect:/home";
     }

@@ -25,14 +25,11 @@ public interface IMain {
         }
     }
     default void getProd(Model model, List<Object> products) {
-        boolean fail_load;
         if(!products.isEmpty()){
             model.addAttribute("products", products);
-            fail_load = false;
-            model.addAttribute("fail_load", fail_load);
+            model.addAttribute("fail_load", false);
         }else{
-            fail_load = true;
-            model.addAttribute("fail_load", fail_load);
+            model.addAttribute("fail_load", false);
         }
     }
     default void getAuth(Model model, Authentication authentication) {
